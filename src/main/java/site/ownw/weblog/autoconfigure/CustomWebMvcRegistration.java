@@ -86,7 +86,7 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 
 	private static final String ERROR_BIND = "HTTP请求处理失败:[path=%s,handler=%s,ip=%s], %s";
 
-	private static final String SPRINGFOX="springfox";
+	private static final String SPRINGFOX = "springfox";
 
 	@Bean
 	public ErrorAttributes errorAttributes() {
@@ -120,9 +120,9 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 						// 请求参数
 						Object[] args = getMethodArgumentValues(request, mavContainer, providedArgs);
 						Logger log = LoggerFactory.getLogger(getMethod().getDeclaringClass());
-						//启用了日志并且不是Swagger的请求才打印日志
-						boolean logDebug = log.isDebugEnabled()&&!handler.contains(SPRINGFOX);
-						if(logDebug){
+						// 启用了日志并且不是Swagger的请求才打印日志
+						boolean logDebug = log.isDebugEnabled() && !handler.contains(SPRINGFOX);
+						if (logDebug) {
 							Object userDetail = request.getAttribute("UserDetail", RequestAttributes.SCOPE_REQUEST);
 							/* 请求入参日志 */
 							String requestParam = argsToString(getMethod().getParameterAnnotations(), args);
@@ -149,7 +149,8 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 									returnValue == null ? NULL : returnValue.getClass().getSimpleName() + LEFT_BRACKET
 											+ responseString + RIGHT_BRACKET);
 							return returnValue;
-						}else{
+						}
+						else {
 							return doInvoke(args);
 						}
 					}
