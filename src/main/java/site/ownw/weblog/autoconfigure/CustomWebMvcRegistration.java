@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
-import site.ownw.common.annotation.IgnoreLogging;
 
 /**
  * HTTP日志
@@ -87,6 +86,8 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 
 	private static final String ERROR_BIND = "HTTP请求处理失败:[path=%s,handler=%s,ip=%s], %s";
 
+	private static final String SPRINGFOX="springfox";
+
 	@Bean
 	public ErrorAttributes errorAttributes() {
 		return new DefaultErrorAttributes() {
@@ -110,39 +111,34 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 					@Override
 					public Object invokeForRequest(@NonNull NativeWebRequest request,
 							ModelAndViewContainer mavContainer, @NonNull Object... providedArgs) throws Exception {
-						Logger log = LoggerFactory.getLogger(getMethod().getDeclaringClass());
 						// 处理HTTP请求的方法
 						String handler = ClassUtils.getQualifiedMethodName(getMethod(), getBeanType());
 						request.setAttribute("Handler", handler, RequestAttributes.SCOPE_REQUEST);
 						// 发送请求的IP
 						String ip = getIpAddr(request);
 						request.setAttribute("IP", ip, RequestAttributes.SCOPE_REQUEST);
-						Object userDetail = request.getAttribute("UserDetail", RequestAttributes.SCOPE_REQUEST);
-						// 是否忽略打印日志
-						boolean ignoreLog = getMethod().isAnnotationPresent(IgnoreLogging.class)
-								|| getBeanType().isAnnotationPresent(IgnoreLogging.class)
-								|| handler.contains("springfox");// 忽略swagger的路径
 						// 请求参数
 						Object[] args = getMethodArgumentValues(request, mavContainer, providedArgs);
-						/* 请求入参日志 */
-						if (!ignoreLog) {
+						Logger log = LoggerFactory.getLogger(getMethod().getDeclaringClass());
+						//启用了日志并且不是Swagger的请求才打印日志
+						boolean logDebug = log.isDebugEnabled()&&!handler.contains(SPRINGFOX);
+						if(logDebug){
+							Object userDetail = request.getAttribute("UserDetail", RequestAttributes.SCOPE_REQUEST);
+							/* 请求入参日志 */
 							String requestParam = argsToString(getMethod().getParameterAnnotations(), args);
 							log.debug(REQUEST_BIND, handler, ip, requestParam);
 							if (userDetail != null) {
 								log.debug("usersDetail:{}", userDetail);
 							}
-						}
-						// 开始处理时间
-						long startTime = System.currentTimeMillis();
-						Object returnValue = doInvoke(args);
-						// 处理请求花费时间
-						long cost = System.currentTimeMillis() - startTime;
-						// 慢接口日志
-						if (cost > FIVE_SECONDS) {
-							log.warn(SLOW_BIND, handler, cost);
-						}
-						/* 请求结束日志 */
-						if (!ignoreLog) {
+							// 开始处理时间
+							long startTime = System.currentTimeMillis();
+							Object returnValue = doInvoke(args);
+							// 处理请求花费时间
+							long cost = System.currentTimeMillis() - startTime;
+							// 慢接口日志
+							if (cost > FIVE_SECONDS) {
+								log.warn(SLOW_BIND, handler, cost);
+							}
 							String response = NULL;
 							if (returnValue != null) {
 								response = returnValue.toString();
@@ -152,8 +148,10 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 							log.debug(RESPONSE_BIND, handler, ip,
 									returnValue == null ? NULL : returnValue.getClass().getSimpleName() + LEFT_BRACKET
 											+ responseString + RIGHT_BRACKET);
+							return returnValue;
+						}else{
+							return doInvoke(args);
 						}
-						return returnValue;
 					}
 				};
 			}
