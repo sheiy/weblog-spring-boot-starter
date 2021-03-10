@@ -127,9 +127,9 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 						/* 请求入参日志 */
 						if (!ignoreLog) {
 							String requestParam = argsToString(getMethod().getParameterAnnotations(), args);
-							log.info(REQUEST_BIND, handler, ip, requestParam);
+							log.debug(REQUEST_BIND, handler, ip, requestParam);
 							if (userDetail != null) {
-								log.info("usersDetail:{}", userDetail);
+								log.debug("usersDetail:{}", userDetail);
 							}
 						}
 						// 开始处理时间
@@ -149,7 +149,7 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
 							}
 							String responseString = response.length() > MAX_LENGTH ? TOO_LONG_WITH_SQUARE_BRACKET
 									: response;
-							log.info(RESPONSE_BIND, handler, ip,
+							log.debug(RESPONSE_BIND, handler, ip,
 									returnValue == null ? NULL : returnValue.getClass().getSimpleName() + LEFT_BRACKET
 											+ responseString + RIGHT_BRACKET);
 						}
