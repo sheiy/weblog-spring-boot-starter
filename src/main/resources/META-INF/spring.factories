@@ -1,3 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-site.ownw.weblog.autoconfigure.CustomWebMvcRegistration
+site.ownw.weblog.autoconfigure.CustomWebMvcRegistration,\
+site.ownw.weblog.autoconfigure.ThreadShader

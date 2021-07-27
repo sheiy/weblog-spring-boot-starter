@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -35,7 +37,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
  * HTTP日志
  */
 @Configuration
-@ComponentScan("site.ownw.weblog")
+@AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
 public class CustomWebMvcRegistration implements WebMvcRegistrations {
 
 	private static final Long FIVE_SECONDS = 5 * 1000L;
