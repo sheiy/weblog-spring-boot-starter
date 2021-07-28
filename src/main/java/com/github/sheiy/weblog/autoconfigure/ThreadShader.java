@@ -1,4 +1,4 @@
-package site.ownw.weblog.autoconfigure;
+package com.github.sheiy.weblog.autoconfigure;
 
 import java.io.IOException;
 import java.util.UUID;
