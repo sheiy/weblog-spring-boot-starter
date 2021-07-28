@@ -1,4 +1,4 @@
-package site.ownw.weblog.autoconfigure;
+package com.github.sheiy.weblog.autoconfigure;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
@@ -16,7 +16,6 @@ import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
