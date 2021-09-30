@@ -1,4 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.github.sheiy.weblog.autoconfigure.CustomWebMvcRegistration,\
-com.github.sheiy.weblog.autoconfigure.ThreadShader
+com.github.sheiy.weblog.autoconfigure.SNShader
