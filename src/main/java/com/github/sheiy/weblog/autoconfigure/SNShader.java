@@ -23,7 +23,7 @@ public class SNShader implements Filter, Ordered {
             throws IOException, ServletException {
         String sn = UUID.randomUUID().toString().replaceAll("-", "");
 		//设置MDC变量，日志里用
-        MDC.put("sn", sn);
+        MDC.put("SN", sn);
         servletRequest.setAttribute("SN", sn);
         filterChain.doFilter(servletRequest, servletResponse);
     }
