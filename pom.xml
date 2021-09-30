@@ -6,7 +6,7 @@
     <groupId>com.github.sheiy</groupId>
     <artifactId>weblog-spring-boot-starter</artifactId>
     <version>1.0.1-SNAPSHOT</version>
-    <name>weblog-spring-boot-starter ${project.version}</name>
+    <name>weblog-spring-boot-starter</name>
 
     <properties>
         <java.version>11</java.version>
