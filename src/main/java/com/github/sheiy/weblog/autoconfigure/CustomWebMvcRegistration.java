@@ -1,5 +1,6 @@
 package com.github.sheiy.weblog.autoconfigure;
 
+import jakarta.servlet.Filter;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -98,6 +99,11 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
                 return errorAttributes;
             }
         };
+    }
+
+    @Bean
+    Filter shShader() {
+        return new SNShader();
     }
 
     @Override

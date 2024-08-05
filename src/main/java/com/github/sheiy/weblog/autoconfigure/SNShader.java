@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.util.UUID;
 import org.slf4j.MDC;
 import org.springframework.core.Ordered;
-import org.springframework.stereotype.Component;
 
 /** 线程着色 */
-@Component
 public class SNShader implements Filter, Ordered {
 
     @Override
