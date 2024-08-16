@@ -1,5 +1,5 @@
 # 使用方式
-1. application.properties中配置文件设置打印请求用序列号`logging.pattern.console=%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %X{SN} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}`
+1. application.properties中配置文件设置打印请求用序列号`logging.pattern.console=%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %X{SN} %clr(${LOG_LEVEL_PATTERN:- %5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}`
 
 2. 设置打印log的Controller目录或类的日志级别为`Debug` 如：`logging.level.site.ownw.demo.C=debug`
 

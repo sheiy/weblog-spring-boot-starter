@@ -90,12 +90,13 @@ public class CustomWebMvcRegistration implements WebMvcRegistrations {
     @Bean
     public ErrorAttributes errorAttributes() {
         return new DefaultErrorAttributes() {
+            private final Logger logger = LoggerFactory.getLogger(getClass());
             @Override
             public Map<String, Object> getErrorAttributes(
                     WebRequest webRequest, ErrorAttributeOptions options) {
                 Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
                 errorAttributes.put("sn", webRequest.getAttribute("SN", RequestAttributes.SCOPE_REQUEST));
-                LoggerFactory.getLogger(DefaultErrorAttributes.class).error("出现跳转错误页");
+                logger.error("出现跳转错误页 {}", errorAttributes);
                 return errorAttributes;
             }
         };
